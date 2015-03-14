@@ -9,9 +9,8 @@ $withdraw_withdraw = security($_POST['action']);
 $withdraw_amount = security($_POST['amount']);
 $withdraw_address = security($_POST['address']);
 $iid = security($_POST['iid']);
-echo $iid;
 if(!$iid) {
-	$my_coins->setSelectInstanceId($my_coins->getInstanceId());
+	$my_coins->setSelectInstanceId($my_coins->getCoinsInstanceId());
 } else {
 	if($iid!=$my_coins->getSelectInstanceId())
 	{
@@ -20,36 +19,36 @@ if(!$iid) {
 }
 
 $iid = $my_coins->getSelectInstanceId();
-$cid = $my_coins->getCoinsSelectInstanceId();
+$cid = $my_coins->getCoinsSelectInstanceId()+1;
 if($withdraw_withdraw=="withdraw") {
    if($withdraw_address) {
       if($withdraw_amount) {
          $withdraw_amount = satoshitize($withdraw_amount);
          if($withdraw_amount<=$Bitcrystald_Balance[$iid]) {
-			$fee=$my_coins->coins[$my_coins->coins_names[1+$cid]]["fee"];
-            $FEEBEE = $my_coins->coins[$my_coins->coins_names[1+$cid]]["FEEBEE"];
+			$fee=$my_coins->coins[$my_coins->coins_names[$cid]]["fee"];
+            $FEEBEE = $my_coins->coins[$my_coins->coins_names[$cid]]["FEEBEE"];
 			$set_withdraw_amount = $withdraw_amount - $fee;       // minus the fee
             $true_withdraw_amount = satoshitize($set_withdraw_amount);
             $Bitcrystald_Withdraw_From = $Bitcrystald[$iid]["daemon"]->sendtoaddress($withdraw_address,(float)$true_withdraw_amount);
             if($Bitcrystald_Withdraw_From) {
-               $result = minusfunds($user_session,$my_coins->coins_names_prefix[1+$cid],$withdraw_amount);
-               $result = plusfunds($FEEBEE,$my_coins->coins_names_prefix[1+$cid],$fee);            // add fee to feebee account
-               $Bitcrystald_Balance = userbalance($user_session,$my_coins->coins_names_prefix[1+$cid]);
+               $result = minusfunds($user_session,$my_coins->coins_names_prefix[$cid],$withdraw_amount);
+               $result = plusfunds($FEEBEE,$my_coins->coins_names_prefix[$cid],$fee);            // add fee to feebee account
+               $Bitcrystald_Balance = userbalance($user_session,$my_coins->coins_names_prefix[$cid]);
                $withdraw_message = '<a href="#'.$Bitcrystald_Withdraw_From.'" target="_blank" style="color: #0B2161;">Withdraw was sent!<br>'.$Bitcrystald_Withdraw_From.'</a>';
-               if(!mysql_query("INSERT INTO transactions (id,date,username,action,coin,address,txid,amount,trade_id) VALUES ('','$date','$user_session','withdraw','".$my_coins->coins_names_prefix[1+$cid]."','$withdraw_address','$Bitcrystald_Withdraw_From','$withdraw_amount','".$my_coins->getTradeId()."')")){
+               if(!mysql_query("INSERT INTO transactions (id,date,username,action,coin,address,txid,amount,trade_id) VALUES ('','$date','$user_session','withdraw','".$my_coins->coins_names_prefix[$cid]."','$withdraw_address','$Bitcrystald_Withdraw_From','$withdraw_amount','".$my_coins->getTradeId()."')")){
                   $eereturn_error = "System error.";
                } else {
                   $eereturn_error = "Logged in.";
                }
             }
          } else {
-            $withdraw_message = 'You do not have enough '.$my_coins->coins_names[1+$cid].'s!';
+            $withdraw_message = 'You do not have enough '.$my_coins->coins_names[$cid].'s!';
          }
       } else {
          $withdraw_message = 'No amount to withdraw was entered!';
       }
    } else {
-      $withdraw_message = 'No '.$my_coins->coins_names[1+$cid].' address was entered!';
+      $withdraw_message = 'No '.$my_coins->coins_names[$cid].' address was entered!';
    }
 }
 ?>
@@ -135,7 +134,7 @@ if($withdraw_withdraw=="withdraw") {
                </tr><tr>
                   <td align="center" style="padding: 2px; font-weight: bold; color: #666666;" nowrap><?php echo $Bitcrystald_Account_Address[$iid]; ?></td>
                </tr><tr>
-                  <?php echo '<td align="left" style="padding: 2px; padding-left: 20px;">Deposits must have 6 confirmations to become active. There is a fee of '.$my_coins->coins[$my_coins->coins_names[1+$cid]]["fee"].' '.$my_coins->coins_names[1+$cid].' to make a withraw.</td>'; ?>
+                  <?php echo '<td align="left" style="padding: 2px; padding-left: 20px;">Deposits must have 6 confirmations to become active. There is a fee of '.$my_coins->coins[$my_coins->coins_names[$cid]]["fee"].' '.$my_coins->coins_names[$cid].' to make a withraw.</td>'; ?>
                </tr>
             </table>
             </center>

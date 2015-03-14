@@ -552,7 +552,7 @@ class w_coins {
 		if($coin_selecter==$this->coins_names_prefix[0]) 
 		{ 
 			$trade_coin = $this->coins_names_prefix[0];
-			$this->setInstanceId($i);
+			$this->setInstanceId(0);
 			return $trade_coin;
 		}
 		
@@ -731,7 +731,7 @@ class w_coins {
 	
 	public function getCoinsInstanceId()
 	{
-		return floor($this->getInstanceId()*3);
+		return $this->instance_id;
 	}
 	
 	public function getId($id)
@@ -751,7 +751,7 @@ class w_coins {
 	
 	public function getCoinsSelectInstanceId()
 	{
-		return floor($this->select_instance_id*3);
+		return $this->select_instance_id;
 	}
 	
 	public function getBitcoindDaemons()

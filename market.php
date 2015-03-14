@@ -13,6 +13,10 @@ if($coin_selecter) {
 }
 $Coin_A_Balance = userbalance($user_session,$BTC);
 $Coin_B_Balance = userbalance($user_session,$BTCRYX);
+$Buying_Rate = buyrate($BTC,$BTCRYX);
+$Selling_Rate = sellrate($BTC,$BTCRYX);
+if(!$Buying_Rate) { $Buying_Rate = '0'; }
+if(!$Selling_Rate) { $Selling_Rate = '0'; }
 $trader = security($_POST['order-trader']);
 $buyer = security($_POST['order-buyer']);
 $trade_action = security($_POST['order-action']);
@@ -370,9 +374,31 @@ if($Trade_Message)
       });
    </script>
    <script type="text/javascript">
-	  function buycalculator() {
+	   function buycalculator() {
+         m = document.getElementById('buy-quantity').value;
+         n = document.getElementById('buy-rate').value;
+         if(m=='') { m = 0; }
+         if(n=='') { n = 0; }
+         o = m*n;
+         g = o.toFixed(8);
+         b = o/100;
+         c = b/5;
+         l = c.toFixed(8);
+         document.getElementById('buy-subtotal').innerHTML = g;
+         document.getElementById('buy-fee').innerHTML = l;
       }
       function sellcalculator() {
+         x = document.getElementById('sell-quantity').value;
+         y = document.getElementById('sell-rate').value;
+         if(x=='') { x = 0; }
+         if(x=='') { x = 0; }
+         z = x*y;
+         r = z.toFixed(8);
+         e = z/100;
+         f = e/5;
+         s = f.toFixed(8);
+         document.getElementById('sell-subtotal').innerHTML = r;
+         document.getElementById('sell-fee').innerHTML = s;
       }
       function setbuyamounts(text) {
          document.getElementById('buy-quantity').value = text;

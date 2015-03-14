@@ -229,7 +229,7 @@ if($PST_Order_Action=="sell") {
                      }
                      $Client_BTC = userbalance($CURR_Selling_Username,$BTC);
                      $Client_BTCRYX = userbalance($CURR_Selling_Username,$BTCRYX);
-                     if($PST_Order_Amount<=$CURR_Selling_Amount) {
+                     if($PST_Order_Amount<$CURR_Selling_Amount) {
                         $Trade_Message = 'Could, Trade matching not done.';
                      } else {
                         $Trade_Message = 'Trade matching not done.';
