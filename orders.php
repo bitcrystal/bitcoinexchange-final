@@ -135,12 +135,14 @@ if($count_transactions_sell != 0)
 						{
 							echo "<tr></tr><td><table>";
 							if($i+2<$count_transactions_buy) {
-								echo '<td><div align="center" class="pending-right" nowrap<b><font color="red">'.$transactions_message_buy[$i].'</b></font></div><p></p></td><td></td>';
-								echo '<td><div align="center" class="pending-right" nowrap<b><font color="red">'.$transactions_message_buy[$i+1].'</b></font></div><p></p></td><td></td>';
-								echo '<td><div align="center" class="pending-right" nowrap<b><font color="red">'.$transactions_message_buy[$i+2].'</b></font></div><p></p></td><td></td>';
+								echo '<div align="center" class="pending-right" nowrap<b><font color="red">'.$transactions_message_buy[$i].'</b></font></div>';
+								echo '<br></br>';
+								echo '<div align="center" class="pending-right" nowrap<b><font color="red">'.$transactions_message_buy[$i+1].'</b></font></div>';
+								echo '<br></br>';
+								echo '<div align="center" class="pending-right" nowrap<b><font color="red">'.$transactions_message_buy[$i+2].'</b></font></div>';
 								$i+=2;
 							} else {
-								echo '<td><div align="center" class="pending-right" nowrap<b><font color="red">'.$transactions_message_buy[$i].'</b></font></div><p></p></td><td></td>';
+								echo '<div align="center" class="pending-right" nowrap<b><font color="red">'.$transactions_message_buy[$i].'</b></font></div>';
 							}
 							echo "</table></td><tr></tr>";
 						}
@@ -164,9 +166,11 @@ if($count_transactions_sell != 0)
 						{
 							echo"<tr></tr><td><table>";
 							if($i+2<$count_transactions_sell) {
-								echo '<td><div align="center" class="pending-right" nowrap<b><font color="red">'.$transactions_message_sell[$i].'</b></font></div><p></p></td><td></td>';
-								echo '<td><div align="center" class="pending-right" nowrap<b><font color="red">'.$transactions_message_sell[$i+1].'</b></font></div><p></p></td><td></td>';
-								echo '<td><div align="center" class="pending-right" nowrap<b><font color="red">'.$transactions_message_sell[$i+2].'</b></font></div><p></p></td><td></td>';
+								echo '<div align="center" class="pending-right" nowrap<b><font color="red">'.$transactions_message_sell[$i].'</b></font></div>';
+								echo '<br></br>';
+								echo '<div align="center" class="pending-right" nowrap<b><font color="red">'.$transactions_message_sell[$i+1].'</b></font></div>';
+								echo '<br></br>';
+								echo '<div align="center" class="pending-right" nowrap<b><font color="red">'.$transactions_message_sell[$i+2].'</b></font></div>';
 								$i+=2;
 							} else {
 								echo '<td><div align="center" class="pending-right" nowrap<b><font color="red">'.$transactions_message_sell[$i].'</b></font></div><p></p></td><td></td>';

@@ -102,9 +102,11 @@ if($count_transactions != 0)
 						{
 							echo "<tr></tr><td><table>";
 							if($i+2<$count_transactions) {
-								echo '<td><div align="center" class="my-pending-right" nowrap<b><font color="red">'.$transactions_message[$i].'</b></font></div><p></p></td><td></td>';
-								echo '<td><div align="center" class="my-pending-right" nowrap<b><font color="red">'.$transactions_message[$i+1].'</b></font></div><p></p></td><td></td>';
-								echo '<td><div align="center" class="my-pending-right" nowrap<b><font color="red">'.$transactions_message[$i+2].'</b></font></div><p></p></td><td></td>';
+								echo '<div align="center" class="my-pending-right" nowrap><b><font color="red">'.$transactions_message[$i].'</b></font></div>';
+								echo '<br></br>';
+								echo '<div align="center" class="my-pending-right" nowrap><b><font color="red">'.$transactions_message[$i+1].'</b></font></div>';
+								echo '<br></br>';
+								echo '<div align="center" class="my-pending-right" nowrap><b><font color="red">'.$transactions_message[$i+2].'</b></font></div>';
 								$i+=2;
 							} else {
 								echo '<td><div align="center" class="my-pending-right" nowrap<b><font color="red">'.$transactions_message[$i].'</b></font></div><p></p></td><td></td>';

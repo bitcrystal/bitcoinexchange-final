@@ -34,6 +34,7 @@ input {
    -moz-box-shadow: 0px 0px 5px 2px #BBBBBB;
    -webkit-box-shadow: 0px 0px 5px 2px #BBBBBB;
 }
+
 .inputtrade { 
    border: 1px solid #848484;
    height: 26px;
@@ -308,6 +309,7 @@ input {
    -moz-box-shadow: 0px 0px 5px 2px #BBBBBB;
    -webkit-box-shadow: 0px 0px 5px 2px #BBBBBB;
 }
+
 .right-panel-table {
    width: 940px;
 }
