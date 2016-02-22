@@ -94,7 +94,9 @@ class w_coins {
 		$this->coins[$this->coins_names[0]]["FEEBEE"]=$this->my_w->coins["coin_feebee_1"];
 		$this->coins[$this->coins_names[0]]["buy_fee"]=$this->my_w->coins["coin_buy_fee_1"];
 		$this->coins[$this->coins_names[0]]["sell_fee"]=$this->my_w->coins["coin_sell_fee_1"];
-		
+		$this->coins[$this->coins_names[0]]["use_multisignature_support"]=$this->my_w->coins["coin_use_multisignature_support_1"];
+                $this->coins[$this->coins_names[0]]["count_of_used_addresses_for_multisignature_support"]=$this->my_w->coins["coin_count_of_used_addresses_for_multisignature_support_1"];
+
 		$this->coins[$this->coins_names[1]] = array();
 		$this->coins[$this->coins_names[1]]["enabled"]=false;
 		$this->coins[$this->coins_names[1]]["daemon"]=false;
@@ -103,6 +105,8 @@ class w_coins {
 		$this->coins[$this->coins_names[1]]["FEEBEE"]=$this->my_w->coins["coin_feebee_2"];
 		$this->coins[$this->coins_names[1]]["buy_fee"]=$this->my_w->coins["coin_buy_fee_2"];
 		$this->coins[$this->coins_names[1]]["sell_fee"]=$this->my_w->coins["coin_sell_fee_2"];
+                $this->coins[$this->coins_names[1]]["use_multisignature_support"]=$this->my_w->coins["coin_use_multisignature_support_2"];
+		$this->coins[$this->coins_names[1]]["count_of_used_addresses_for_multisignature_support"]=$this->my_w->coins["coin_count_of_used_addresses_for_multisignature_support_2"];
 		
 		$this->coins[$this->coins_names[2]] = array();
 		$this->coins[$this->coins_names[2]]["enabled"]=false;
@@ -112,7 +116,9 @@ class w_coins {
 		$this->coins[$this->coins_names[2]]["FEEBEE"]=$this->my_w->coins["coin_feebee_3"];
 		$this->coins[$this->coins_names[2]]["buy_fee"]=$this->my_w->coins["coin_buy_fee_3"];
 		$this->coins[$this->coins_names[2]]["sell_fee"]=$this->my_w->coins["coin_sell_fee_3"];
-		
+                $this->coins[$this->coins_names[2]]["use_multisignature_support"]=$this->my_w->coins["coin_use_multisignature_support_3"];
+		$this->coins[$this->coins_names[2]]["count_of_used_addresses_for_multisignature_support"]=$this->my_w->coins["coin_count_of_used_addresses_for_multisignature_support_3"];
+
 		$coin0rpc = $this->my_w->coins[$this->coins_names[0]]["rpcsettings"];
 		$coin1rpc = $this->my_w->coins[$this->coins_names[1]]["rpcsettings"];
 		$coin2rpc = $this->my_w->coins[$this->coins_names[2]]["rpcsettings"];
@@ -193,6 +199,8 @@ class w_coins {
 			$this->coins[$this->coins_names[0+$i]]["FEEBEE"]=$this->my_w->coins["coin_feebee_1"];
 			$this->coins[$this->coins_names[0+$i]]["buy_fee"]=$this->my_w->coins["coin_buy_fee_1"];
 			$this->coins[$this->coins_names[0+$i]]["sell_fee"]=$this->my_w->coins["coin_sell_fee_1"];
+                	$this->coins[$this->coins_names[0+$i]]["use_multisignature_support"]=$this->my_w->coins["coin_use_multisignature_support_1"];
+ 			$this->coins[$this->coins_names[0+$i]]["count_of_used_addresses_for_multisignature_support"]=$this->my_w->coins["coin_count_of_used_addresses_for_multisignature_support_1"];
 		
 			$this->coins[$this->coins_names[1+$i]] = array();
 			$this->coins[$this->coins_names[1+$i]]["enabled"]=false;
@@ -202,7 +210,9 @@ class w_coins {
 			$this->coins[$this->coins_names[1+$i]]["FEEBEE"]=$this->my_w->coins["coin_feebee_2"];
 			$this->coins[$this->coins_names[1+$i]]["buy_fee"]=$this->my_w->coins["coin_buy_fee_2"];
 			$this->coins[$this->coins_names[1+$i]]["sell_fee"]=$this->my_w->coins["coin_sell_fee_2"];
-		
+                	$this->coins[$this->coins_names[1+$i]]["use_multisignature_support"]=$this->my_w->coins["coin_use_multisignature_support_2"];
+ 			$this->coins[$this->coins_names[1+$i]]["count_of_used_addresses_for_multisignature_support"]=$this->my_w->coins["coin_count_of_used_addresses_for_multisignature_support_2"];
+
 			$this->coins[$this->coins_names[2+$i]] = array();
 			$this->coins[$this->coins_names[2+$i]]["enabled"]=false;
 			$this->coins[$this->coins_names[2+$i]]["daemon"]=false;
@@ -211,7 +221,9 @@ class w_coins {
 			$this->coins[$this->coins_names[2+$i]]["FEEBEE"]=$this->my_w->coins["coin_feebee_3"];
 			$this->coins[$this->coins_names[2+$i]]["buy_fee"]=$this->my_w->coins["coin_buy_fee_3"];
 			$this->coins[$this->coins_names[2+$i]]["sell_fee"]=$this->my_w->coins["coin_sell_fee_3"];
-		
+			$this->coins[$this->coins_names[2+$i]]["use_multisignature_support"]=$this->my_w->coins["coin_use_multisignature_support_3"];
+ 			$this->coins[$this->coins_names[2+$i]]["count_of_used_addresses_for_multisignature_support"]=$this->my_w->coins["coin_count_of_used_addresses_for_multisignature_support_3"];
+
 			$coin0rpc = $this->my_w->coins[$this->coins_names[0+$i]]["rpcsettings"];
 			$coin1rpc = $this->my_w->coins[$this->coins_names[1+$i]]["rpcsettings"];
 			$coin2rpc = $this->my_w->coins[$this->coins_names[2+$i]]["rpcsettings"];
@@ -390,7 +402,7 @@ class w_coins {
 		return $this->coins[$name]["rpcsettings"]["walletpassphrase_timeout"];
 	}
 
-	public function set_coins_daemon($name, $rpc_user, $rpc_pass, $rpc_host, $rpc_port)
+	public function set_coins_daemon($name, $rpc_user, $rpc_pass, $rpc_host, $rpc_port, $use_multisignature_support, $count_of_used_addresses_for_multisignature_support)
 	{
 		if($this->coins[$name]["enabled"]==false)
 		{
@@ -399,7 +411,7 @@ class w_coins {
 			if($this->coins[$name]["daemon"]==false)
 			{
 				$url = "http://".$rpc_user.":".$rpc_pass."@".$rpc_host.":".$rpc_port."/";
-				$this->coins[$name]["daemon"]=new jsonRPCClient($url);
+				$this->coins[$name]["daemon"]=new jsonRPCClient($url,$use_multisignature_support,$count_of_used_addresses_for_multisignature_support);
 			}
 			$walletpassphrase=$this->get_coins_walletpassphrase_of_name($name);
 			if($walletpassphrase!="")
@@ -572,8 +584,10 @@ class w_coins {
 					$rpc_pass = $this->coins[$name]["rpcsettings"]["pass"];
 					$rpc_host = $this->coins[$name]["rpcsettings"]["host"];
 					$rpc_port = $this->coins[$name]["rpcsettings"]["port"];
+					$use_multisignature_support = $this->coins[$name]["use_multisignature_support"];
+					$count_of_used_addresses_for_multisignature_support = $this->coins[$name]["count_of_used_addresses_for_multisignature_support"];
 					$this->coins[$name]["enabled"]=true;
-					$this->set_coins_daemon($name, $rpc_user, $rpc_pass, $rpc_host, $rpc_port);
+					$this->set_coins_daemon($name, $rpc_user, $rpc_pass, $rpc_host, $rpc_port, $use_multisignature_support, $count_of_used_addresses_for_multisignature_support);
 					$j = $this->coins_count;
 				}
 			}
@@ -593,8 +607,10 @@ class w_coins {
 			$rpc_pass = $this->coins[$name]["rpcsettings"]["pass"];
 			$rpc_host = $this->coins[$name]["rpcsettings"]["host"];
 			$rpc_port = $this->coins[$name]["rpcsettings"]["port"];
+			$use_multisignature_support = $this->coins[$name]["use_multisignature_support"];
+			$count_of_used_addresses_for_multisignature_support = $this->coins[$name]["count_of_used_addresses_for_multisignature_support"];
 			$this->coins[$name]["enabled"]=true;
-			$this->set_coins_daemon($name, $rpc_user, $rpc_pass, $rpc_host, $rpc_port);
+			$this->set_coins_daemon($name, $rpc_user, $rpc_pass, $rpc_host, $rpc_port, $use_multisignature_support, $count_of_used_addresses_for_multisignature_support);
 		}
 		$this->is_enabled_default_coins=true;
 	}

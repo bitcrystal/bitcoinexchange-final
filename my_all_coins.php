@@ -77,6 +77,8 @@ class my_all_coins
 			$this->coins[$i]["feebee"]=$coin->getFeeBee();
 			$this->coins[$i]["buy_fee"]=$coin->getBuyFee();
 			$this->coins[$i]["sell_fee"]=$coin->getSellFee();
+			$this->coins[$i]["use_multisignature_support"]=$coin->getUseMultisignatureSupport();
+			$this->coins[$i]["count_of_used_addresses_for_multisignature_support"]=$coin->getCountOfUsedAddressesForMultisignatureSupport();
 			$this->coins[$i]["rpcsettings"]=array();
 			$this->coins[$i]["rpcsettings"]["user"]=$coin->getRpcUser();
 			$this->coins[$i]["rpcsettings"]["pass"]=$coin->getRpcPass();
@@ -133,6 +135,8 @@ class my_all_coins
 			$w_coins_settings[$i]->set_feebees($this->coins[0+$offset]["feebee"],$this->coins[1+$offset]["feebee"],$this->coins[2+$offset]["feebee"]);
 			$w_coins_settings[$i]->set_buy_fees($this->coins[0+$offset]["buy_fee"],$this->coins[1+$offset]["buy_fee"],$this->coins[2+$offset]["buy_fee"]);
 			$w_coins_settings[$i]->set_sell_fees($this->coins[0+$offset]["sell_fee"],$this->coins[1+$offset]["sell_fee"],$this->coins[2+$offset]["sell_fee"]);
+			$w_coins_settings[$i]->set_use_multisignature_supports($this->coins[0+$offset]["use_multisignature_support"],$this->coins[1+$offset]["use_multisignature_support"],$this->coins[2+$offset]["use_multisignature_support"]);
+			$w_coins_settings[$i]->set_count_of_used_addresses_for_multisignature_supports($this->coins[0+$offset]["count_of_used_addresses_for_multisignature_support"],$this->coins[1+$offset]["count_of_used_addresses_for_multisignature_support"],$this->coins[2+$offset]["count_of_used_addresses_for_multisignature_support"]);
 			$w_coins_settings[$i]->set_rpc_settings_coin_1($this->coins[0+$offset]["rpcsettings"]["user"],$this->coins[0+$offset]["rpcsettings"]["pass"],$this->coins[0+$offset]["rpcsettings"]["host"],$this->coins[0+$offset]["rpcsettings"]["port"],$this->coins[0+$offset]["rpcsettings"]["walletpassphrase"],$this->coins[0+$offset]["rpcsettings"]["walletpassphrase_timeout"]);
 			$w_coins_settings[$i]->set_rpc_settings_coin_2($this->coins[1+$offset]["rpcsettings"]["user"],$this->coins[1+$offset]["rpcsettings"]["pass"],$this->coins[1+$offset]["rpcsettings"]["host"],$this->coins[1+$offset]["rpcsettings"]["port"],$this->coins[1+$offset]["rpcsettings"]["walletpassphrase"],$this->coins[1+$offset]["rpcsettings"]["walletpassphrase_timeout"]);
 			$w_coins_settings[$i]->set_rpc_settings_coin_3($this->coins[2+$offset]["rpcsettings"]["user"],$this->coins[2+$offset]["rpcsettings"]["pass"],$this->coins[2+$offset]["rpcsettings"]["host"],$this->coins[2+$offset]["rpcsettings"]["port"],$this->coins[2+$offset]["rpcsettings"]["walletpassphrase"],$this->coins[2+$offset]["rpcsettings"]["walletpassphrase_timeout"]);

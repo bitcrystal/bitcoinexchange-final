@@ -11,14 +11,30 @@ class my_coin
 		$this->init_feebee(); // IMPORTANT, this are the accounts that fees will be paid to make sure to register it
 		$this->init_buy_fee();
 		$this->init_sell_fee();
+		$this->init_use_multisignature_support();
+		$this->init_count_of_used_addresses_for_multisignature_support();
 		$this->set_buy_fee(false);
 		$this->set_sell_fee(false);
+		$this->set_use_multisignature_support(true);
+		$this->set_count_of_used_addresses_for_multisignature_support(3);
+	}
+
+	private function init_use_multisignature_support()
+	{
+		$multisignature_support = false;
+		$this->coin["use_multisignature_support"] = $multisignature_support;
+	}
+
+	private function init_count_of_used_addresses_for_multisignature_support()
+	{
+		$count_of_useaddresses_for_multisignature_support = 0;
+		$this->coin["count_of_used_addresses_for_multisignature_support"] = $count_of_used_addresses_for_multisignature_support;
 	}
 	
 	private function init_name()
 	{
 		$coin_name = "Bitcoin";
-		$this->coins["name"] = $coin_name;
+		$this->coin["name"] = $coin_name;
 	}
 	
 	private function init_prefix()
@@ -49,6 +65,16 @@ class my_coin
 	{
 		$coin_fee=true;
 		$this->coin["sell_fee"] = $coin_fee;
+	}
+
+	public function set_use_multisignature_support($use_multisignature_support)
+	{
+		$this->coin["use_multisignature_support"] = $use_multisignature_support;
+	}
+
+	public function set_count_of_used_addresses_for_multisignature_support($count_of_used_addresses_for_multisignature_support)
+	{
+		$this->coin["count_of_used_addresses_for_multisignature_support"] = $count_of_used_addresses_for_multisignature_support;
 	}
 	
 	public function set_name($coin_name)
@@ -161,6 +187,16 @@ class my_coin
 	public function getRpcWalletpassphraseTimeout()
 	{
 		return $this->coin["rpcsettings"]["walletpassphrase_timeout"];
+	}
+
+	public function getUseMultisignatureSupport()
+	{
+		return $this->coin["use_multisignature_support"];
+	}
+
+	public function getCountOfUsedAddressesForMultisignatureSupport()
+	{
+		return $this->coin["count_of_used_addresses_for_multisignature_support"];
 	}
 }
 

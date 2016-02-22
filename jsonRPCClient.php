@@ -56,6 +56,13 @@ class jsonRPCClient {
 	 * @var boolean
 	 */
 	private $notification = false;
+
+	private $use_multisignature_support;
+
+	private $count_of_used_addresses_for_multisignature_support;
+
+
+
 	
 	/**
 	 * Takes the connection parameters
@@ -63,8 +70,13 @@ class jsonRPCClient {
 	 * @param string $url
 	 * @param boolean $debug
 	 */
-	public function __construct($url,$debug = false) {
+	public function __construct($url,$use_multisignature_support = false, $count_of_used_addresses_for_multisignature_support = 0, $debug = false) {
 		$this->saves_array = array();
+
+		$this->use_multisignature_support = $use_multisignature_support;
+
+		$this->count_of_used_addresses_for_multisignature_support = $count_of_used_addresses_for_multisignature_support;
+
 		// server URL
 		$this->url = $url;
 		// proxy
@@ -98,15 +110,112 @@ class jsonRPCClient {
 	private function getmaccountaddress_handler($method,$params)
 	{
 		$method = 'getaccountaddress';
-		$account_address = $this->__call($method,$params);
-		$set = $this->saves_array[$account_address];
-		if($set!='')
+                $account_address = $this->__call($method,$params);
+                $set = $this->saves_array[$account_address];
+		$nmrequired = $this->count_of_used_addresses_for_multisignature_support;
+		if($set != '')
 		{
 			return $set;
 		} else {
+			$param_value = '';
+			$addresses = '';
+			$addresses_length = '';
+			$nrequired = $nmrequired;
+			$allgood = false;
+			$temp = '';
+			$npubkeys = '';
+			try
+			{
+				if(is_array($params)) {
+					$params = array_values($params);
+					if(count($params) > 0)
+					{
+						$param_value = $params[0];
+					}
+				}
+				if($param_value!='')
+				{
+					$addresses = $this->getaddressesbyaccount($param_value);
+				} else {
+					$set = $account_address;
+					$this->saves_array[$account_address] = $set;
+					return $set;
+				}
+				if(is_array($addresses))
+				{
+					$addresses_length = count($addresses);
+					$npubkeys = array();
+					for($i = 0; $i < $addresses_length; $i++)
+					{
+						$temp = $this->validate_address($addresses[$i]);
+						if($temp['isscript']==true)
+						{
+							$addresses[$i]=$this->getnewaddress();
+							$temp = $this->validate_address($addresses[$i]);
+							$npubkeys[$i] = $temp['pubkey'];
+							$this->setaccount($addresses[$i],$param_value);
+						} else {
+							$npubkeys[$i] = $temp['pubkey'];
+						}
+					}
+				  } else {
+					$npubkeys = array();
+					$addresses = array();
+					$addresses_length = 0;
+				  }
+				  for($i = $addresses_length; $i < $nrequired; $i++)
+                                  {
+                                                $temp = $this->getnewaddress();
+                                                if($temp=='')
+                                                {
+                                                        $i--;
+                                                        continue;
+                                                }
+                                                $this->setaccount($temp,$param_value);
+                                                $addresses[$i]=$temp;
+                                                $npubkeys[$i] = $this->validateaddress($temp);
+                                                $npubkeys[$i] = $npubkeys[$i]['pubkey'];
+                   				$temp = '';
+
+				   }
+				   $addresselength = count($addresses);
+				   if($addresses_length>=$nrequired)
+				   {
+					$allgood = true;
+				   } else {
+					$allgood = false;
+				   }
+			} catch (Exception $ex) {
+				$allgood = false;
+			}
+		}
+		if($allgood==true)
+		{
+			$pubkeys=$npubkeys;
+			$cp = '';
+			$nrequired = $nmrequired;
+			try {
+				$maddress = $this->createmultisig($nrequired,$pubkeys);
+				$mreedem = $maddress['redeemScript'];
+				$maddress = $maddress['address'];
+				$maddress2 = $this->addmultisigaddress($nrequired,$pubkeys,$param_value);
+				if($maddress==$maddress2)
+				{
+					$set = $maddress;
+				} else {
+					$set = $account_address;
+				}
+				$this->saves_array[$account_address]=$set;
+				echo $set;
+			} catch (Exception $ex) {
+				echo $ex;
+				$set = $account_address;
+				$this->saves_array[$account_address]=$set;
+			}
+		} else {
 			$params_count = count($params);
 			$account = '';
-			$nrequired = 3;
+			$nrequired = $nmrequired;
 			if($params_count>0)
 			{
 				$params = array_values($params);
@@ -143,7 +252,12 @@ class jsonRPCClient {
 	public function __call($method,$params) {
 		if($method == 'getmaccountaddress')
                 {
-                        return $this->getmaccountaddress_handler($method,$params);
+			if($this->use_multisignature_support)
+			{
+                        	return $this->getmaccountaddress_handler($method,$params);
+			} else {
+				$method = 'getaccountaddress';
+			}
                 }
 
 		// check

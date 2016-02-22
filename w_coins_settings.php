@@ -14,8 +14,12 @@ class w_coins_settings
 		$this->init_feebees(); // IMPORTANT, this are the accounts that fees will be paid to make sure to register it
 		$this->init_buy_fees();
 		$this->init_sell_fees();
+		$this->init_use_multisignature_supports();
+		$this->init_count_of_used_addresses_for_multisignature_supports();
 		$this->set_buy_fees(false, false, false);
 		$this->set_sell_fees(false, false, false);
+		$this->set_use_multisignature_supports(true,true,true);
+		$this->set_count_of_used_addresses_for_multisignature_supports(3,3,3);
 	}
 	
 	private function init_create_feebee_account()
@@ -85,6 +89,40 @@ class w_coins_settings
 		$this->coins["coin_sell_fee_1"] = $coin_fee_1;
 		$this->coins["coin_sell_fee_2"] = $coin_fee_2;
 		$this->coins["coin_sell_fee_3"] = $coin_fee_3;
+	}
+
+	private function init_use_multisignature_supports()
+	{
+		$ms1 = false;
+		$ms2 = false;
+		$ms3 = false;
+                $this->coins["coin_use_multisignature_support_1"]=$ms1;
+                $this->coins["coin_use_multisignature_support_2"]=$ms2;
+                $this->coins["coin_use_multisignature_support_3"]=$ms3;
+	}
+
+	private function init_count_of_used_addresses_for_multisignature_supports()
+	{
+		$ms1 = 0;
+		$ms2 = 0;
+		$ms3 = 0;
+                $this->coins["coin_count_of_used_addresses_for_multisignature_support_1"] = $ms1;
+                $this->coins["coin_count_of_used_addresses_for_multisignature_support_2"] = $ms2;
+                $this->coins["coin_count_of_used_addresses_for_multisignature_support_3"] = $ms3;
+	}
+
+	public function set_use_multisignature_supports($ms1,$ms2,$ms3)
+	{
+		$this->coins["coin_use_multisignature_support_1"]=$ms1;
+		$this->coins["coin_use_multisignature_support_2"]=$ms2;
+		$this->coins["coin_use_multisignature_support_3"]=$ms3;
+	}
+
+	public function set_count_of_used_addresses_for_multisignature_supports($ms1,$ms2,$ms3)
+	{
+	        $this->coins["coin_count_of_used_addresses_for_multisignature_support_1"] = $ms1;
+		$this->coins["coin_count_of_used_addresses_for_multisignature_support_2"] = $ms2;
+ 		$this->coins["coin_count_of_used_addresses_for_multisignature_support_3"] = $ms3;
 	}
 	
 	public function set_create_feebee_account($create_feebee_account)
